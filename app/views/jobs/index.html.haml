@@ -1,0 +1,8 @@
+%p{:style => "color: green"}= notice
+%h1 Jobs
+#jobs
+  - @jobs.each do |job|
+    = render job
+    %p
+      = link_to "Show this job", job, class: 'btn btn-primary'
+= link_to "New job", new_job_path

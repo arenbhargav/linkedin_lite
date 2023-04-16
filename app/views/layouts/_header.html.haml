@@ -1,0 +1,28 @@
+%nav.navbar.navbar-expand-lg.bg-light
+  .container-fluid
+    %a.navbar-brand{:href => home_url} LinkedIn
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarSupportedContent", "data-bs-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        %li.nav-item
+          %a.nav-link.active{"aria-current" => "page", :href => jobs_url} Jobs
+        - if current_user && current_user.employer?
+          %li.nav-item
+            %a.nav-link{:href => users_path} Applicants
+        %li.nav-item.dropdown
+          %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+            Dropdown
+          %ul.dropdown-menu
+            %li
+              %a.dropdown-item{:href => "#"} Action
+            %li
+              %a.dropdown-item{:href => "#"} Another action
+            %li
+              %hr.dropdown-divider/
+            %li
+              %a.dropdown-item{:href => "#"} Something else here
+      %form.d-flex
+        %a.nav-link.disabled
+          - if user_signed_in?
+            = link_to 'signout', destroy_user_session_path, data: { "turbo-method": :delete }

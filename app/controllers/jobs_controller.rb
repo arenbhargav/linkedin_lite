@@ -1,15 +1,16 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: %i[ show edit update destroy ]
+  before_action :set_job, only: %i[show edit update destroy apply]
 
   def index
-    @jobs = Job.all
+    @jobs = current_user.jobs if current_user.employer?
+    @jobs ||= Job.all
   end
 
   def show
   end
 
   def new
-    @job = Job.new
+    @job = current_user.jobs.new
   end
 
   def edit
@@ -41,6 +42,19 @@ class JobsController < ApplicationController
     end
   end
 
+  def apply
+    # TODO: show user friendly error notice
+    respond_to do |format|
+      if @job.applicants << current_user
+        format.html { redirect_to job_url(@job), notice: "Applied for job successfully." }
+        format.json { render :show, status: :ok, location: @job }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @job.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @job.destroy
 
@@ -57,6 +71,8 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.fetch(:job, {})
+    params.fetch(:job, {}).
+      permit(:title, :vacancy, :experience, :salary).
+      merge({ employer_id: current_user.id })
   end
 end

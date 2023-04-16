@@ -1,0 +1,24 @@
+%div{:id => "#{dom_id job}"}
+%table.table
+  %thead
+    %tr
+      %th{:scope => "col"} #
+      %th{:scope => "col"} Title 
+      %th{:scope => "col"} Vacancy
+      %th{:scope => "col"} Employer
+      %th{:scope => "col"} Experience
+      %th{:scope => "col"} Salary
+
+  %tbody
+    %tr
+      %th{:scope => "row"}
+      %td 
+        = job.title
+      %td
+        = job.vacancy
+      %td
+        = "#{job.employer.first_name} #{job.employer.last_name}"
+      %td
+        = job.experience
+      %td
+        = job.salary

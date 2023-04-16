@@ -3,11 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
-  end
-
-  # GET /users/1 or /users/1.json
-  def show
+    @users = User.joins(job_applications: :job).select('users.*, job_applications.status as application_status, jobs.title as job_title').where('job_applications.job_id': current_user.jobs.ids)
   end
 
   # GET /users/new

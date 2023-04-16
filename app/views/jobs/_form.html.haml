@@ -1,0 +1,24 @@
+= form_with(model: job) do |f|
+  - if job.errors.any?
+    %div{:style => "color: red"}
+      %h2
+        = pluralize(job.errors.count, "error")
+        prohibited this job from being saved:
+      %ul
+        - job.errors.each do |error|
+          %li= error.full_message
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: "form-control", placeholder: "Enter Job title"
+  -# TODO: add description column
+  .form-group
+    = f.label :vacancy
+    = f.number_field :vacancy, class: "form-control", placeholder: "Number of vacancies"
+  .form-group
+    = f.label :experience
+    = f.number_field :experience, class: "form-control", placeholder: "Experience required in years"
+  .form-group
+    = f.label :salary
+    = f.number_field :salary, class: "form-control", placeholder: "Salary"
+  %div
+    = f.submit

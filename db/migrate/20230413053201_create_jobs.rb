@@ -4,6 +4,8 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.string :title
       t.integer :vacancy
       t.bigint :employer_id
+      t.integer :experience
+      t.float :salary
 
       t.timestamps
     end
